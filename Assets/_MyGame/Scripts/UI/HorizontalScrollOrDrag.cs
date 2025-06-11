@@ -1,3 +1,4 @@
+using _MyGame.Scripts.Features.Cube;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
