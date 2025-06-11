@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _MyGame.Scripts.Features.Cube
+namespace Features.Cube
 {
     public class CubeView : MonoBehaviour
     {

@@ -1,15 +1,12 @@
-using _MyGame.Scripts.Core;
-using _MyGame.Scripts.Features.Cube;
-using _MyGame.Scripts.Features.Hole;
-using _MyGame.Scripts.Services.Cube.Strategies;
-using _MyGame.Scripts.Services.Tower;
-using  _MyGame.Scripts.Localization;
-
+using Core;
+using Core.Interfaces;
+using Features.Cube;
+using Features.Hole;
+using Localization;
 using UnityEngine;
 
-namespace _MyGame.Scripts.Services.Cube
+namespace Services.Cube
 {
-
     public class NewCubeDropStrategy : ICubeDropStrategy
     {
         private readonly TowerService _tower;
@@ -28,7 +25,6 @@ namespace _MyGame.Scripts.Services.Cube
             var dragged = ctx.Dragged;
             var view = dragged.GetComponent<CubeView>();
             var anim = dragged.GetComponent<CubeAnimator>();
-            var cubeHandle = dragged.GetComponent<CubeDragHandler>();
             
             dragged.transform.SetParent(_tower.GetParent(), true);
             UnblockRaycasts(dragged);
@@ -53,7 +49,6 @@ namespace _MyGame.Scripts.Services.Cube
                 anim.AnimateJumpTo(topPos, _tower.CubeHeight);
             
             _tower.CommitAddCube(view);
-            cubeHandle.InTower = true;
             
             return new DropResult(true, _localizationConfig.CubePlaced.ToString());
         }

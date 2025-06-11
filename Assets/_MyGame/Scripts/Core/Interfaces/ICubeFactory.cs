@@ -1,8 +1,11 @@
 using UnityEngine;
 
-public interface ICubeFactory
+namespace Core.Interfaces
 {
-    GameObject Create(Transform parent);
+    public interface ICubeFactory
+    {
+        GameObject Create(Transform parent);
 
-    GameObject Clone(GameObject source, Transform parent);
+        GameObject Clone(GameObject source, Transform parent);
+    }
 }

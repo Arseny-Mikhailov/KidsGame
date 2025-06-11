@@ -1,11 +1,11 @@
-using _MyGame.Scripts.Core;
-using _MyGame.Scripts.Features.Cube;
-using _MyGame.Scripts.Services.Cube.Strategies;
-using _MyGame.Scripts.Services.Tower;
+using Core;
+using Core.Interfaces;
+using Features.Cube;
+using Features.Cube.Drag;
 using UnityEngine;
 using VContainer;
 
-namespace _MyGame.Scripts.Services.Cube
+namespace Services.Cube
 {
     public class CubeDragService : ICubeDragService
     {

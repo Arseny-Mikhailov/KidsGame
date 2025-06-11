@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-namespace _MyGame.Scripts.UI
+namespace UI
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class MessageView : MonoBehaviour

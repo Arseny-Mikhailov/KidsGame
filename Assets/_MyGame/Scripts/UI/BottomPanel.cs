@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _MyGame.Scripts.UI
+namespace UI
 {
     public class BottomPanel : MonoBehaviour
     {

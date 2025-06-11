@@ -1,6 +1,6 @@
-using _MyGame.Scripts.UI;
+using UI;
 
-namespace _MyGame.Scripts.Services
+namespace Services
 {
     public class MessageService
     {

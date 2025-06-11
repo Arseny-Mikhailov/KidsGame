@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _MyGame.Scripts.Features.Hole
+namespace Features.Hole
 {
     public class HoleView : MonoBehaviour
     {

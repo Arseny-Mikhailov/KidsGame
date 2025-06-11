@@ -1,7 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 
-namespace _MyGame.Scripts.Features.Cube
+namespace Features.Cube
 {
     public class CubeAnimator : MonoBehaviour
     {

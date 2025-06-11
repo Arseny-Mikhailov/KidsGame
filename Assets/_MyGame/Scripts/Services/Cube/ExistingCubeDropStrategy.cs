@@ -1,12 +1,11 @@
-using _MyGame.Scripts.Core;
-using _MyGame.Scripts.Features.Cube;
-using _MyGame.Scripts.Features.Hole;
-using _MyGame.Scripts.Services.Cube.Strategies;
-using _MyGame.Scripts.Services.Tower;
-using _MyGame.Scripts.Localization;
+using Core;
+using Core.Interfaces;
+using Features.Cube;
+using Features.Hole;
+using Localization;
 using UnityEngine;
 
-namespace _MyGame.Scripts.Services.Cube
+namespace Services.Cube
 {
     public class ExistingCubeDropStrategy : ICubeDropStrategy
     {
@@ -24,12 +23,12 @@ namespace _MyGame.Scripts.Services.Cube
         public DropResult Handle(DragContext ctx, Vector2 screenPos)
         {
             var dragged = ctx.Dragged;
-            var view    = dragged.GetComponent<CubeView>();
-            var anim    = dragged.GetComponent<CubeAnimator>();
+            var view = dragged.GetComponent<CubeView>();
+            var anim = dragged.GetComponent<CubeAnimator>();
 
             if (_holeDetector.IsInHole(dragged.transform.position))
             {
-                int idx = _tower.GetIndexOf(view);
+                var idx = _tower.GetIndexOf(view);
                 _tower.Remove(view);
                 _tower.CollapseTowerFromIndex(idx);
                 anim.Explode();

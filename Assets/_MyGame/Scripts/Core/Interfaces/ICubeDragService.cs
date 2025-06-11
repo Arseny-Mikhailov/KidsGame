@@ -1,7 +1,6 @@
-using _MyGame.Scripts.Core;
 using UnityEngine;
 
-namespace _MyGame.Scripts.Services.Cube
+namespace Core.Interfaces
 {
     public interface ICubeDragService
     {

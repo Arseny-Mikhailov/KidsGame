@@ -1,4 +1,4 @@
-namespace _MyGame.Scripts.Services.Cube.Strategies
+namespace Core
 {
     public class DropResult
     {

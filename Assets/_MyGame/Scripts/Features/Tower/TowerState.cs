@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using _MyGame.Scripts.Features.Cube;
+using Features.Cube;
 
-namespace _MyGame.Scripts.Features.Tower
+namespace Features.Tower
 {
     public class TowerState
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _MyGame.Scripts.Core
+namespace Core
 {
     public class DragContext
     {

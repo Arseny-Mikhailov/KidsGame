@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _MyGame.Scripts.Features.Tower
+namespace Features.Tower
 {
     public class TowerPositioning
     {

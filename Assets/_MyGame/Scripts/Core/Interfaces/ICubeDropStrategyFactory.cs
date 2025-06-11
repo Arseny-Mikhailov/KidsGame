@@ -1,6 +1,4 @@
-using _MyGame.Scripts.Services.Cube.Strategies;
-
-namespace _MyGame.Scripts.Services.Cube
+namespace Core.Interfaces
 {
     public interface ICubeDropStrategyFactory
     {

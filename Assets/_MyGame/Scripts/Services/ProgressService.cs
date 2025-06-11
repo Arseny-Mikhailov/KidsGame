@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using _MyGame.Scripts.Core;
-using _MyGame.Scripts.Features.Cube;
-using _MyGame.Scripts.Services.Tower;
+using Core.Config;
+using Features.Cube;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace _MyGame.Scripts.Services
+namespace Services
 {
     public class ProgressService : IInitializable
     {
@@ -75,10 +74,8 @@ namespace _MyGame.Scripts.Services
 
                 var cubeInstance = _container.Instantiate(_cubePrefab, _towerService.GetParent());
                 var view = cubeInstance.GetComponent<CubeView>();
-                var handler = cubeInstance.GetComponent<CubeDragHandler>();
 
                 view.SetSprite(_gameConfig.cubes[index]);
-                handler.TowerService = _towerService;
 
                 var targetPos = _towerService.GetTopPosition();
                 cubeInstance.transform.position = targetPos;

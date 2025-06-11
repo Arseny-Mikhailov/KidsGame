@@ -2,7 +2,7 @@ using I2.Loc;
 
 using UnityEngine;
 
-namespace _MyGame.Scripts.Localization
+namespace Localization
 {
     [CreateAssetMenu(fileName = nameof(LocalizationConfig), menuName = "Configs/" + nameof(LocalizationConfig))]
     public class LocalizationConfig : ScriptableObject

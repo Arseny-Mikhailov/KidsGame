@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using _MyGame.Scripts.Features.Cube;
-using _MyGame.Scripts.Features.Tower;
+using Features.Cube;
+using Features.Tower;
 using UnityEngine;
 
-namespace _MyGame.Scripts.Services.Tower
+namespace Services
 {
     public class TowerService
     {
@@ -19,14 +19,13 @@ namespace _MyGame.Scripts.Services.Tower
         public TowerService(TowerZone towerZone, Camera camera)
         {
             _state = new TowerState();
-            _validator = new TowerValidator(towerZone.rect, camera, towerZone.cubeHeight);
+            _validator = new TowerValidator(towerZone.rect, camera);
             _positioning = new TowerPositioning(towerZone.rect, towerZone.cubeHeight, towerZone.cubeWidth);
             _parent = towerZone.transform;
             _camera = camera;
             _cubeHeight = towerZone.cubeHeight;
         }
-
-        public TowerValidator Validator => _validator;
+        
         public Transform GetParent() => _parent;
         public void Remove(CubeView cube) => _state.Remove(cube); 
         public int GetIndexOf(CubeView cube) => _state.GetIndexOf(cube);
@@ -43,7 +42,7 @@ namespace _MyGame.Scripts.Services.Tower
 
             var last = _state.Count > 0 ? _state.All[^1].transform : null;
             
-            if (!_validator.IsOverValidSurface(screenPos, last))
+            if (!_validator.IsOverValidSurface(screenPos))
             {
                 return false;
             }

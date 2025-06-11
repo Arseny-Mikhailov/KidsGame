@@ -1,10 +1,10 @@
-using _MyGame.Scripts.Core;
-using _MyGame.Scripts.UI;
+using Core.Config;
+using UI;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-namespace _MyGame.Scripts.Features.Cube
+namespace Features.Cube
 {
     public class CubeSpawner : IInitializable
     {
