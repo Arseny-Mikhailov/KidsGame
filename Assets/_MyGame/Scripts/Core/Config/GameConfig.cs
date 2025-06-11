@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _MyGame.Scripts.Core
 {
-    [CreateAssetMenu(fileName = "GameConfig", menuName = "Configs/GameConfig")]
+    [CreateAssetMenu(fileName = nameof(GameConfig), menuName = "Configs/" + nameof(GameConfig))]
     public class GameConfig : ScriptableObject
     {
         public Sprite[] cubes;

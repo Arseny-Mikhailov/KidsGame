@@ -3,19 +3,24 @@ using _MyGame.Scripts.Features.Cube;
 using _MyGame.Scripts.Features.Hole;
 using _MyGame.Scripts.Services.Cube.Strategies;
 using _MyGame.Scripts.Services.Tower;
+using  _MyGame.Scripts.Localization;
+
 using UnityEngine;
 
 namespace _MyGame.Scripts.Services.Cube
 {
+
     public class NewCubeDropStrategy : ICubeDropStrategy
     {
         private readonly TowerService _tower;
         private readonly HoleDetector _holeDetector;
+        private readonly LocalizationConfig _localizationConfig;
 
-        public NewCubeDropStrategy(TowerService towerService, HoleDetector holeDetector)
+        public NewCubeDropStrategy(TowerService towerService, HoleDetector holeDetector, LocalizationConfig localizationConfig)
         {
             _tower = towerService;
             _holeDetector = holeDetector;
+            _localizationConfig = localizationConfig;
         }
 
         public DropResult Handle(DragContext ctx, Vector2 screenPos)
@@ -30,13 +35,15 @@ namespace _MyGame.Scripts.Services.Cube
             if (_holeDetector.IsInHole(dragged.transform.position))
             {
                 anim.Explode();
-                return new DropResult(false, "Кубик разбился в дыре");
+                
+                return new DropResult(false, _localizationConfig.CubeDroppedToHole.ToString());
             }
             
             if (!_tower.CanPlaceCube(screenPos))
             {
                 anim.Explode();
-                return new DropResult(false, "Нельзя: упёрлись в потолок/мимо башни");
+                
+                return new DropResult(false, _localizationConfig.CubePlacementBlocked.ToString());
             }
             
             var topPos = _tower.GetTopPosition();
@@ -45,7 +52,8 @@ namespace _MyGame.Scripts.Services.Cube
                 anim.AnimateJumpTo(topPos, _tower.CubeHeight);
             
             _tower.CommitAddCube(view);
-            return new DropResult(true, "Кубик поставлен в башню");
+            
+            return new DropResult(true, _localizationConfig.CubePlaced.ToString());
         }
 
         private void UnblockRaycasts(GameObject go)

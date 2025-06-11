@@ -3,6 +3,7 @@ using _MyGame.Scripts.Features.Cube;
 using _MyGame.Scripts.Features.Hole;
 using _MyGame.Scripts.Services.Cube.Strategies;
 using _MyGame.Scripts.Services.Tower;
+using _MyGame.Scripts.Localization;
 using UnityEngine;
 
 namespace _MyGame.Scripts.Services.Cube
@@ -11,12 +12,13 @@ namespace _MyGame.Scripts.Services.Cube
     {
         private readonly TowerService _tower;
         private readonly HoleDetector _holeDetector;
+        private readonly LocalizationConfig _localizationConfig;
 
-        public ExistingCubeDropStrategy(TowerService towerService,
-            HoleDetector holeDetector)
+        public ExistingCubeDropStrategy(TowerService towerService, HoleDetector holeDetector, LocalizationConfig localizationConfig)
         {
             _tower = towerService;
             _holeDetector = holeDetector;
+            _localizationConfig = localizationConfig;
         }
 
         public DropResult Handle(DragContext ctx, Vector2 screenPos)
@@ -31,13 +33,15 @@ namespace _MyGame.Scripts.Services.Cube
                 _tower.Remove(view);
                 _tower.CollapseTowerFromIndex(idx);
                 anim.Explode();
-                return new DropResult(true, "Кубик выброшен в дыру");
+                
+                return new DropResult(true, _localizationConfig.CubeThrownToHole.ToString());
             }
 
             dragged.transform.SetParent(_tower.GetParent(), true);
             anim.AnimateSettle(ctx.OriginalPosition);
             UnblockRaycasts(dragged);
-            return new DropResult(false, "Отмена: кубик возвращён");
+            
+            return new DropResult(false, _localizationConfig.CubeReturned.ToString());
         }
 
         private void UnblockRaycasts(GameObject go)
