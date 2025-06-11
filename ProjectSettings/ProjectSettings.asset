@@ -673,7 +673,7 @@ PlayerSettings:
     PS5: DOTWEEN;TextMeshPro
     QNX: DOTWEEN;TextMeshPro
     Stadia: DOTWEEN;TextMeshPro
-    Standalone: DOTWEEN;TextMeshPro;DOTWEEN_UNITASK_SUPPORT
+    Standalone: DOTWEEN;TextMeshPro
     VisionOS: DOTWEEN;TextMeshPro
     WebGL: DOTWEEN;TextMeshPro
     Windows Store Apps: DOTWEEN
