@@ -1,19 +1,16 @@
-using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
+using UnityEngine;
 
-namespace _MyGame.Scripts
+namespace _MyGame.Scripts.UI
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class MessageView : MonoBehaviour
     {
-        [SerializeField] private CanvasGroup _canvasGroup;
-        [SerializeField] private TextMeshProUGUI _messageText;
-        [Tooltip("Сколько секунд показываем текст")]
-        [SerializeField] private float       _displayDuration = 1.5f;
-        [Tooltip("Длительность fade in/out")]
-        [SerializeField] private float       _fadeDuration    = 0.3f;
+        [SerializeField] private CanvasGroup canvasGroup;
+        [SerializeField] private TextMeshProUGUI messageText;
+        [SerializeField] private float displayDuration = 1.5f;
+        [SerializeField] private float fadeDuration    = 0.3f;
 
         private Tween _tween;
 
@@ -21,15 +18,15 @@ namespace _MyGame.Scripts
         {
             _tween?.Kill();
 
-            _messageText.text    = message;
-            _canvasGroup.alpha   = 0;
-            _canvasGroup.blocksRaycasts = false;
+            messageText.text = message;
+            canvasGroup.alpha = 0;
+            canvasGroup.blocksRaycasts = false;
             
             _tween = DOTween.Sequence()
-                .Append(_canvasGroup.DOFade(1f, _fadeDuration))
-                .AppendInterval(_displayDuration)
-                .Append(_canvasGroup.DOFade(0f, _fadeDuration))
-                .OnComplete(() => _canvasGroup.blocksRaycasts = false);
+                .Append(canvasGroup.DOFade(1f, fadeDuration))
+                .AppendInterval(displayDuration)
+                .Append(canvasGroup.DOFade(0f, fadeDuration))
+                .OnComplete(() => canvasGroup.blocksRaycasts = false);
         }
     }
 }

@@ -1,51 +1,46 @@
-using _MyGame.Scripts.Services.Tower;
+using _MyGame.Scripts.Core;
+using _MyGame.Scripts.Services.Cube;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using VContainer;
+using _MyGame.Scripts.Services.Tower;
 
 namespace _MyGame.Scripts.Features.Cube
 {
     public class CubeDragHandler : MonoBehaviour,
         IBeginDragHandler, IDragHandler, IEndDragHandler
     {
+        [Inject] public TowerService TowerService { get; set; }
         [Inject] private ICubeDragService _dragService;
 
-        public TowerService TowerService { get; set; }
-        public bool IsExisting { get; set; }
-        public Vector3 OriginalPosition { get; set; }
-
         private Canvas _canvas;
-        private GameObject _dragObj;
+        private DragContext _ctx;
 
         private void Awake()
         {
             _canvas = GetComponentInParent<Canvas>();
         }
 
-        public void OnBeginDrag(PointerEventData eventData)
+        public void OnBeginDrag(PointerEventData e)
         {
-            OriginalPosition = transform.position;
-            _dragObj = _dragService.BeginDrag(gameObject, TowerService, this);
+            _ctx = _dragService.BeginDrag(gameObject);
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (_dragObj == null) return;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 _canvas.transform as RectTransform,
                 eventData.position,
                 eventData.pressEventCamera,
-                out var localPoint
-            );
-
-            _dragObj.transform.localPosition = localPoint;
+                out var local);
+            
+            _ctx.Dragged.transform.localPosition = local;
         }
 
-        public void OnEndDrag(PointerEventData eventData)
+        public void OnEndDrag(PointerEventData e)
         {
-            if (_dragObj == null) return;
-            _dragService.EndDrag(_dragObj, eventData.position, this);
-            _dragObj = null;
+            _dragService.EndDrag(_ctx, e.position);
+            _ctx = null;
         }
     }
 }

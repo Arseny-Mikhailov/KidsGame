@@ -42,17 +42,18 @@ namespace _MyGame.Scripts.Services
             }
 
             var spriteIndexes = new List<int>();
+            
             foreach (var cubeView in cubesInTower)
             {
                 var sprite = cubeView.GetComponent<UnityEngine.UI.Image>().sprite;
-                int index = Array.IndexOf(_gameConfig.cubes, sprite);
+                var index = Array.IndexOf(_gameConfig.cubes, sprite);
                 if (index > -1)
                 {
                     spriteIndexes.Add(index);
                 }
             }
 
-            string saveData = string.Join(",", spriteIndexes);
+            var saveData = string.Join(",", spriteIndexes);
             PlayerPrefs.SetString(TowerSaveKey, saveData);
             PlayerPrefs.Save();
             Debug.Log($"Tower saved: {saveData}");
@@ -62,7 +63,7 @@ namespace _MyGame.Scripts.Services
         {
             if (!PlayerPrefs.HasKey(TowerSaveKey)) return;
 
-            string saveData = PlayerPrefs.GetString(TowerSaveKey);
+            var saveData = PlayerPrefs.GetString(TowerSaveKey);
             if (string.IsNullOrEmpty(saveData)) return;
 
             Debug.Log($"Loading tower: {saveData}");

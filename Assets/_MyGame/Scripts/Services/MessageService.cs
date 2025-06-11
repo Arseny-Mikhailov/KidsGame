@@ -1,3 +1,5 @@
+using _MyGame.Scripts.UI;
+
 namespace _MyGame.Scripts.Services
 {
     public class MessageService

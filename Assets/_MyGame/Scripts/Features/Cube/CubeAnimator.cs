@@ -15,7 +15,7 @@ namespace _MyGame.Scripts.Features.Cube
             transform.DOJump(position, cubeHeight, 1, 0.4f)
                 .SetEase(Ease.OutQuad);
         }
-
+        
         public void Explode()
         {
             transform.DOScale(Vector3.zero, 0.3f)

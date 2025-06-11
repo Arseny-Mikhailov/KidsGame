@@ -481,10 +481,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00159bd72c5d24945928c960d48dfbd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 762686238}
-  _messageText: {fileID: 762686236}
-  _displayDuration: 1.5
-  _fadeDuration: 0.3
+  canvasGroup: {fileID: 762686238}
+  messageText: {fileID: 762686236}
+  displayDuration: 1.5
+  fadeDuration: 0.3
 --- !u!114 &762686236
 MonoBehaviour:
   m_ObjectHideFlags: 0

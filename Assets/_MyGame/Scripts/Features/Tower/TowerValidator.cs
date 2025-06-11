@@ -1,34 +1,32 @@
+using System.Collections.Generic;
+using _MyGame.Scripts.Features.Cube;
 using UnityEngine;
 
-namespace _MyGame.Scripts.Features.Tower
+public class TowerValidator
 {
-    public class TowerValidator
+    private readonly RectTransform _towerZone;
+    private readonly Camera _camera;
+
+    public TowerValidator(RectTransform towerZone, Camera camera, float cubeHeight)
     {
-        private readonly RectTransform _towerZone;
-        private readonly Camera _camera;
+        _towerZone = towerZone;
+        _camera = camera;
+    }
+    
+    public bool IsOverValidSurface(Vector3 screenPos, Transform lastCube)
+    {
+        return RectTransformUtility.RectangleContainsScreenPoint(_towerZone, screenPos, _camera);
+    }
 
-        public TowerValidator(RectTransform towerZone, Camera camera, float cubeHeight)
+    public bool IsOverExistingCubes(Vector3 screenPos, IReadOnlyList<CubeView> cubesInTower)
+    {
+        foreach (var cube in cubesInTower)
         {
-            _towerZone = towerZone;
-            _camera = camera;
-        }
-        
-        public bool IsOverValidSurface(Vector3 screenPos, Transform lastCube)
-        {
-            if (lastCube == null)
+            if (RectTransformUtility.RectangleContainsScreenPoint(cube.GetComponent<RectTransform>(), screenPos, _camera))
             {
-                return RectTransformUtility.RectangleContainsScreenPoint(
-                    _towerZone,
-                    screenPos,
-                    _camera
-                );
+                return true;
             }
-
-            return RectTransformUtility.RectangleContainsScreenPoint(
-                lastCube.GetComponent<RectTransform>(),
-                screenPos,
-                _camera
-            );
         }
+        return false;
     }
 }

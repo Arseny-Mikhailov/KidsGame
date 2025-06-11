@@ -15,7 +15,7 @@ namespace _MyGame.Scripts.Services.Tower
         private readonly float _cubeHeight;
 
         public IReadOnlyList<CubeView> CubesInTower => _state.All;
-        
+
         public TowerService(TowerZone towerZone, Camera camera)
         {
             _state = new TowerState();
@@ -26,27 +26,43 @@ namespace _MyGame.Scripts.Services.Tower
             _cubeHeight = towerZone.cubeHeight;
         }
 
+        public TowerValidator Validator => _validator;
+        public Transform GetParent() => _parent;
+        public void Remove(CubeView cube) => _state.Remove(cube); 
+        public int GetIndexOf(CubeView cube) => _state.GetIndexOf(cube);
+        public bool Contains(CubeView cube) => _state.Contains(cube);
+        public int Count => _state.Count;
+        public float CubeHeight => _cubeHeight;
+        
         public bool CanPlaceCube(Vector3 screenPos)
         {
-            Transform last = _state.Count > 0 ? _state.All[^1].transform : null;
+            if (_state.Count == 0)
+            {
+                return true;
+            }
 
+            var last = _state.Count > 0 ? _state.All[^1].transform : null;
+            
             if (!_validator.IsOverValidSurface(screenPos, last))
             {
                 return false;
             }
-
-            Vector3 nextWorldPos = _positioning.GetTopPosition(last);
-            float scaledCubeHeight = _cubeHeight * (last != null ? last.lossyScale.y : _parent.lossyScale.y);
-            Vector3 topEdgeWorldPos = nextWorldPos + Vector3.up * (scaledCubeHeight * 0.5f);
-            Vector3 topEdgeScreenPos = _camera.WorldToScreenPoint(topEdgeWorldPos);
-
-            if (topEdgeScreenPos.y > Screen.height)
+            
+            if (!_validator.IsOverExistingCubes(screenPos, _state.All))
             {
-                Debug.Log("Tower is too high!");
                 return false;
             }
 
-            return true;
+            var nextWorldPos = _positioning.GetTopPosition(last);
+            var scaledCubeHeight = _cubeHeight * (last != null ? last.lossyScale.y : _parent.lossyScale.y);
+            var topEdgeWorldPos = nextWorldPos + Vector3.up * (scaledCubeHeight * 0.5f);
+            var topEdgeScreenPos = _camera.WorldToScreenPoint(topEdgeWorldPos);
+
+            if (!(topEdgeScreenPos.y > Screen.height)) return true;
+
+            Debug.Log("Tower is too high!");
+
+            return false;
         }
 
         public void CommitAddCube(CubeView cube)
@@ -56,24 +72,18 @@ namespace _MyGame.Scripts.Services.Tower
 
         public Vector3 GetTopPosition()
         {
-            Transform last = _state.Count > 0 ? _state.All[^1].transform : null;
+            var last = _state.Count > 0 ? _state.All[^1].transform : null;
             return _positioning.GetTopPosition(last);
         }
         
-        public Transform GetParent() => _parent;
-        
-        public bool Remove(CubeView cube) => _state.Remove(cube);
-        public int GetIndexOf(CubeView cube) => _state.GetIndexOf(cube);
         public void CollapseTowerFromIndex(int startIndex)
         {
-            for (int i = startIndex; i < _state.Count; i++)
+            for (var i = startIndex; i < _state.Count; i++)
             {
                 var cubeView = _state.All[i];
                 var animator = cubeView.GetComponent<CubeAnimator>();
-                
-                float dropDistance = _cubeHeight * cubeView.transform.lossyScale.y;
-                
-                Vector3 targetPos = cubeView.transform.position - Vector3.up * dropDistance;
+                var dropDistance = _cubeHeight * cubeView.transform.lossyScale.y;
+                var targetPos = cubeView.transform.position - Vector3.up * dropDistance;
 
                 if (animator != null)
                 {
@@ -85,7 +95,5 @@ namespace _MyGame.Scripts.Services.Tower
                 }
             }
         }
-        public bool Contains(CubeView cube) => _state.Contains(cube);
-        public int Count => _state.Count;
     }
 }
